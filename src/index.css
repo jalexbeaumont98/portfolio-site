@@ -16,7 +16,7 @@
 
 .main-content {
   padding-top: 80px;      /* keeps space under navbar */
-  padding-bottom: 80px; /* ✅ new padding for bottom space */
+  padding-bottom: 80px; /*  padding for bottom space */
   min-height: 100vh;      /* full height */
   display: flex;
   flex-direction: column; /* stack items top to bottom */
@@ -25,10 +25,9 @@
 }
 
 .project-section {
-  padding: 2rem;            /* ✅ space inside each section */
-  margin-bottom: 2rem;      /* ✅ space between sections */
-  border-radius: 8px;       /* optional: rounded corners */
-  background-color: #fafafa;/* optional: subtle background */
+  padding: 2rem;            /*  space inside each section */
+  margin-bottom: 2rem;      /*  space between sections */
+  border-radius: 8px;       /* rounded corners */
   box-shadow: 0 2px 6px rgba(0,0,0,0.05); /* optional: light shadow */
 }
 
@@ -78,7 +77,7 @@ p {
   aspect-ratio: 16 / 9;   /* keeps correct video proportions */
   display: block;
   margin: 1rem auto;      /* centers horizontally */
-  border-radius: 8px;     /* optional: rounded corners */
+  border-radius: 8px;     /* rounded corners */
   box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
 }
 

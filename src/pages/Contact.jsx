@@ -29,9 +29,9 @@ function Contact() {
 
       {/* Contact info panel */}
       <section className="contact-info">
-        <p><strong>Email:</strong> contact@jalexbeaumont.com</p>
-        <p><strong>Phone:</strong> (506) 470-7704</p>
-        <p><strong>Location:</strong> Halifax, NS</p>
+        <span><strong>Email:</strong> contact@jalexbeaumont.com</span>
+        <span><strong>Phone:</strong> (506) 470-7704</span>
+        <span><strong>Location:</strong> Halifax, NS</span>
       </section>
 
       {/* Contact form */}

@@ -11,7 +11,7 @@ function Education() {
 
       <section className="education-section">
         <h2>Centennial College, Scarborough</h2>
-        <h3>Game Programming Fast Track with Co-op</h3>
+        <h3>Game Programming Fast Track</h3>
         <p>September 2025 – May 2027 (Expected)</p>
         <p>
           Enrolled in an intensive program focused on advanced game programming concepts, 

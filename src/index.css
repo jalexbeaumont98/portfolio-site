@@ -47,10 +47,19 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  
 }
 
 h2 {
   font-size: 2.2em;
+}
+
+h1::after {
+  content: "";
+  display: block;
+  width: 40%;             /* 40% of page width */
+  margin: 0.5rem auto 0;  /* spacing and center alignment */
+  border-bottom: 3px solid;
 }
 
 p {
@@ -127,6 +136,11 @@ ul li a:hover {
   text-align: left;
 }
 
+.contact-info span {
+  display: block;      /* ✅ each on its own line */
+  margin-bottom: 0.5rem;
+}
+
 
 .contact-form {
   display: flex;
@@ -135,6 +149,7 @@ ul li a:hover {
   max-width: 500px;
   margin: 0 auto;
   text-align: left;
+
 }
 
 .contact-form label {

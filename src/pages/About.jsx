@@ -13,7 +13,9 @@ function About() {
       <br></br>
       <img src="/profileshot.jpg" alt="Profile shot" className="project-image" />
       <br></br>
-      <p>Originally from Fredericton, New Brunswick, I’ve made my way to Halifax after school in the hopes of finding more opportunities in a bigger and busier city.</p>
+      <p>Originally from Fredericton, New Brunswick, I’ve made my way to Halifax after graduating from UNB in the hopes of finding more opportunities in a bigger and busier city.</p>
+      <br></br>
+      <p>I have a bachelor's degree in Computer Science and I've recently started the Game Programming Fast Track Program at Centennial College.</p>
       <br></br>
       <p>I enjoy game development (naturally), going out with my friends, live music, and playing rec as well as league sports, especially soccer which I play on multiple teams for. </p>
       <br></br>

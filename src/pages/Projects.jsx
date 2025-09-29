@@ -29,12 +29,7 @@ function Projects() {
                 ></iframe>
 
                 <p>
-                    A large 2D video game in the Construct3 game engine for mobile devices called Asteroid Emperor.
-                    I was solely responsible for all game design, art, programming, and testing for the project.
-                    Gained valuable skills in managing a large project over a long time period as the game grew in size and complexity.
-                    Learned the ins and outs of deploying an application to mobile devices as well as developing a game for cross-platform.
-                    Released the game to the Play Store, App Store, and itch.io.
-                    Earned over 500 downloads between the stores, a positive rating on AppRaven, and received a positive review by SNAPP.
+                    Built in Construct3, Asteroid Emperor was a long-term solo project designed to demonstrate my versatility as a developer. The game was fully developed by myself, including design, programming, art, and testing. Throughout the project I gained experience managing a large-scale codebase, developing cross-platform systems, and navigating the process of publishing to mobile platforms. Features include roguelike progression, fast-paced 2D action, and a dedicated UI designed for mobile. The game was released on the Play Store, App Store, and itch.io, and has received positive community feedback, including reviews on AppRaven and SNAPP.
                     <br></br>
                     <br></br> Role: Developer and Owner
                     <br></br> Outcome: Finished and published to stores.
@@ -57,8 +52,8 @@ function Projects() {
             {/* Project 2 */}
             <section className="project-section">
                 <h2>Untitled Tower Defense Game</h2>
-                <img src="towerdefence1.png" alt="Project Two Screenshot" className="project-image" />
-
+                {/*<img src="towerdefence1.png" alt="Project Two Screenshot" className="project-image" />
+                */}
                 <p>A simple tower defense game in Unity C# to show proficiency in the engine/language as well as programming patterns and UI.</p>
 
                 {/* will add this another day
@@ -107,7 +102,7 @@ function Projects() {
                     The tool was also integrated with the application's data entry system, making it easy to insert
                     finished diagrams directly into archaeological records. Was solely developed by myself based on direction from my supervisors and was part of a larger software.
                     <br></br>
-                    <br></br> Role: Developer 
+                    <br></br> Role: Developer
                     <br></br> Outcome: Finished during time at company.
 
                 </p>

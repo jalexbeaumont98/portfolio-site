@@ -29,12 +29,31 @@ export const updateById = async (req, res, next) => {
 export const removeById = async (req, res, next) => {
   try {
     const doc = await Contact.findByIdAndDelete(req.params.id);
-    if (!doc) return res.status(404).json({ message: 'Not found' });
-    res.json({ message: 'Deleted' });
-  } catch (err) { next(err); }
+    if (!doc) {
+      return res.status(404).json({ message: 'Document not found' });
+    }
+    res.json({
+      message: 'Document successfully deleted',
+      deleted: doc
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 export const removeAll = async (req, res, next) => {
-  try { const resu = await Contact.deleteMany({}); res.json({ deleted: resu.deletedCount }); }
-  catch (err) { next(err); }
+  try {
+    const result = await Contact.find({});
+    if (result.length === 0) {
+      return res.status(404).json({ message: 'No documents to delete' });
+    }
+
+    await Contact.deleteMany({});
+    res.json({
+      message: `${result.length} documents deleted`,
+      deleted: result
+    });
+  } catch (err) {
+    next(err);
+  }
 };

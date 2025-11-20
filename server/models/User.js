@@ -6,7 +6,8 @@ const userSchema = new mongoose.Schema({
   email:   { type: String, required: true, unique: true, lowercase: true, trim: true },
   password:{ type: String, required: true },           // keep your existing field name
   created: { type: Date,   default: Date.now },
-  updated: { type: Date,   default: Date.now }
+  updated: { type: Date,   default: Date.now },
+  role: { type: String, enum: ['user', 'admin'], default: 'user' }
 });
 
 // hash if new or modified

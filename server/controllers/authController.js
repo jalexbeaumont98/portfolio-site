@@ -28,9 +28,6 @@ export const signin = async (req, res) => {
       config.jwtSecret
     );
 
-    // Optional cookie
-    res.cookie("t", token, { expire: new Date() + 9999 });
-
     return res.json({
       token,
       user: {

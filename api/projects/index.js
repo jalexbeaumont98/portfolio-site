@@ -1,11 +1,11 @@
 // api/projects/index.js
+// api/projects/index.js
 import { connectDB } from '../../server/db.js';
-import Project from '../../server/models/Project.js';
-import { handleController } from '../_utils.js';
 import {
-  getAll as getAllProjects,
-  createOne as createProject
+  getAll,
+  createOne,
 } from '../../server/controllers/projectsController.js';
+import { handlePublic, handleAuthed } from '../_utils.js';
 
 export default async function handler(req, res) {
   const uri = process.env.MONGO_URI;
@@ -15,22 +15,18 @@ export default async function handler(req, res) {
   await connectDB(uri);
 
   if (req.method === 'GET') {
-    // public listing — no auth, no handleController
-    return getAllProjects(req, res, err => {
-      if (err) {
-        console.error('Projects GET error:', err);
-        res.status(500).json({ error: 'Server error' });
-      }
-    });
+    // Public: list all projects
+    return handlePublic(req, res, getAll);
   }
 
   if (req.method === 'POST') {
-    // admin-only create, enforced inside controller via ensureAdmin
-    return handleController(req, res, createProject);
-  }
-
-  if (req.method === 'DELETE') {
-    return res.status(405).json({ error: 'Method not allowed on this endpoint' });
+    // Admin-only create
+    return handleAuthed(req, res, (req2, res2, next) => {
+      if (req2.auth?.role !== 'admin') {
+        return res2.status(403).json({ error: 'Admin only' });
+      }
+      return createOne(req2, res2, next);
+    });
   }
 
   return res.status(405).json({ error: 'Method not allowed' });

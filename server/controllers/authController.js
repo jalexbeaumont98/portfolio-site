@@ -5,22 +5,47 @@ import User from '../models/User.js';
 
 export const signin = async (req, res) => {
   try {
+    console.log('🔐 Signin body:', req.body);  // TEMP LOG
+
     const { email, password } = req.body;
-    const u = await User.findOne({ email });
-    if (!u) return res.status(401).json({ error: 'User not found' });
 
-    const ok = await u.comparePassword(password);
-    if (!ok) return res.status(401).json({ error: "Email and password don't match." });
+    // 1. Find user by email
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      console.log('❌ User not found for email:', email);
+      return res.status(401).json({ error: 'User not found' });
+    }
 
-    const token = jwt.sign({ _id: u._id }, config.jwtSecret);
+    // 2. Check password using your schema method
+    // If you’re using the crypto-based schema from slides:
+    //   UserSchema.methods.authenticate = function(plainText) { ... }
+    if (!user.authenticate(password)) {
+      console.log('❌ Password mismatch for:', email);
+      return res.status(401).json({ error: "Email and password don't match." });
+    }
+
+    // 3. Issue JWT
+    const token = jwt.sign(
+      { _id: user._id, role: user.role || 'user' },
+      config.jwtSecret
+    );
+
+    // Optional cookie (useful for classic Express, not required for SPA)
     res.cookie('t', token, { expire: new Date() + 9999 });
 
+    // 4. Respond with token + public user info
     return res.json({
       token,
-      user: { _id: u._id, name: u.name, email: u.email }
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role || 'user'
+      }
     });
   } catch (err) {
-    return res.status(401).json({ error: 'Could not sign in' });
+    console.error('🔥 Signin error:', err);
+    return res.status(500).json({ error: 'Could not sign in' });
   }
 };
 

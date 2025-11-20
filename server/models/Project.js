@@ -21,8 +21,6 @@ const projectSchema = new Schema({
   completionDate:  { type: Date },
   description: { type: String, trim: true },
 
-  // ⭐ New portfolio-friendly fields
-
   // Generic list of links (GitHub, itch, store page, design doc, etc.)
   links: [linkSchema],
 

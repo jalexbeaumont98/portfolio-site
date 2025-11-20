@@ -5,47 +5,44 @@ import User from '../models/User.js';
 
 export const signin = async (req, res) => {
   try {
-    console.log('🔐 Signin body:', req.body);  // TEMP LOG
+    console.log("🔐 SIGNIN BODY:", req.body);
 
     const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-    // 1. Find user by email
-    const user = await User.findOne({ email: email });
     if (!user) {
-      console.log('❌ User not found for email:', email);
-      return res.status(401).json({ error: 'User not found' });
+      console.log("❌ User not found:", email);
+      return res.status(401).json({ error: "User not found" });
     }
 
-    // 2. Check password using your schema method
-    // If you’re using the crypto-based schema from slides:
-    //   UserSchema.methods.authenticate = function(plainText) { ... }
-    if (!user.authenticate(password)) {
-      console.log('❌ Password mismatch for:', email);
+    // 👉 This matches your schema
+    const ok = await user.comparePassword(password);
+    if (!ok) {
+      console.log("❌ Wrong password for:", email);
       return res.status(401).json({ error: "Email and password don't match." });
     }
 
-    // 3. Issue JWT
+    // Create JWT
     const token = jwt.sign(
-      { _id: user._id, role: user.role || 'user' },
+      { _id: user._id, role: user.role },
       config.jwtSecret
     );
 
-    // Optional cookie (useful for classic Express, not required for SPA)
-    res.cookie('t', token, { expire: new Date() + 9999 });
+    // Optional cookie
+    res.cookie("t", token, { expire: new Date() + 9999 });
 
-    // 4. Respond with token + public user info
     return res.json({
       token,
       user: {
         _id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role || 'user'
+        role: user.role
       }
     });
   } catch (err) {
-    console.error('🔥 Signin error:', err);
-    return res.status(500).json({ error: 'Could not sign in' });
+    console.error("🔥 Signin error:", err);
+    return res.status(500).json({ error: "Could not sign in" });
   }
 };
 

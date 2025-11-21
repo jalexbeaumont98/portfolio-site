@@ -8,7 +8,7 @@ export function ensureAdmin(req) {
   }
 }
 
-export const getAll = async (req, res, next) => {
+export const listAll = async (req, res, next) => {
   try { const docs = await Qualification.find(); res.json(docs); }
   catch (err) { next(err); }
 };

@@ -1,5 +1,6 @@
 // src/api/qualifications.js
-import { API_BASE, authHeaders } from "./config";
+const API_BASE =
+  import.meta.env.VITE_API_BASE || ""; // for localhost use ""
 
 /**
  * Create a new qualification (ADMIN ONLY).

@@ -1,5 +1,13 @@
 import Qualification from '../models/Qualification.js';
 
+export function ensureAdmin(req) {
+  if (!req.auth || req.auth.role !== "admin") {
+    const err = new Error("Admin access required");
+    err.status = 403;
+    throw err;
+  }
+}
+
 export const getAll = async (req, res, next) => {
   try { const docs = await Qualification.find(); res.json(docs); }
   catch (err) { next(err); }

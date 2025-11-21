@@ -9,15 +9,22 @@
   background-color: #f5f5f5;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   padding: 0 1rem;
   border-bottom: 1px solid #ccc;
   z-index: 1000;
 }
 
+/* Left side: logo + links grouped together */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* space between logo and links */
+}
+
+/* Logo */
 .logo img {
-  margin-right: auto;  /* pushes logo hard left */
-  height: 100px;       /* gif scaling */
+  /* remove margin-right: auto; no longer needed */
+  height: 100px;  /* gif scaling */
   width: auto;
 }
 
@@ -42,4 +49,44 @@
   border: 1px solid #3D7068;
   border-radius: 4px;
   padding: 2px 6px;
+}
+
+/* Right side: login / username / logout / New Project */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* username text on the right */
+.nav-username {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* buttons on the right (Login, Logout, New Project) */
+.nav-button {
+  border: 1px solid #3D7068;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  background-color: #14453D;
+  color: #f5f5f5;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.nav-button:hover {
+  background-color: #3D7068;
+  transform: translateY(-1px);
+}
+
+/* optional: slightly different style for logout */
+.nav-button.nav-logout {
+  background-color: #b91c1c;
+  border-color: #b91c1c;
+}
+
+.nav-button.nav-logout:hover {
+  background-color: #dc2626;
 }

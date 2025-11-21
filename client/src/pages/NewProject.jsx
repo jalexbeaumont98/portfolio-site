@@ -14,6 +14,8 @@ export default function NewProject() {
   const [completionDate, setCompletionDate] = useState("");
   const [githubUrl, setGithubUrl] = useState("");
   const [itchUrl, setItchUrl] = useState("");
+  const [appstoreUrl, setAppStoreUrl] = useState("");
+  const [playstoreUrl, setPlayStoreUrl] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
   const [imageUrls, setImageUrls] = useState(""); // comma-separated
   const [techStack, setTechStack] = useState(""); // comma-separated
@@ -42,6 +44,12 @@ export default function NewProject() {
       }
       if (itchUrl) {
         links.push({ label: "itch.io", url: itchUrl, type: "itch" });
+      }
+      if (appstoreUrl) {
+        links.push({ label: "App Store", url: appstoreUrl, type: "appstore" });
+      }
+      if (playstoreUrl) {
+        links.push({ label: "Play Store", url: playstoreUrl, type: "playstore" });
       }
 
       const payload = {
@@ -76,7 +84,7 @@ export default function NewProject() {
     <div className="form-page">
       <div className="form-card">
         <h1 className="form-title">Add New Project</h1>
-        <form className="project-form" onSubmit={handleSubmit}>
+        <form className="new-project-form" onSubmit={handleSubmit}>
           <label>
             Title
             <input
@@ -144,6 +152,24 @@ export default function NewProject() {
               value={itchUrl}
               onChange={(e) => setItchUrl(e.target.value)}
               placeholder="https://jalexbeaumont.itch.io/..."
+            />
+          </label>
+          <label>
+            App Store URL
+            <input
+              type="url"
+              value={appstoreUrl}
+              onChange={(e) => setAppStoreUrl(e.target.value)}
+              placeholder=""
+            />
+          </label>
+          <label>
+            Play Store URL
+            <input
+              type="url"
+              value={playstoreUrl}
+              onChange={(e) => setPlayStoreUrl(e.target.value)}
+              placeholder=""
             />
           </label>
 

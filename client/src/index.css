@@ -221,6 +221,29 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.new-project-form {
+  display: flex;
+  flex-direction: column;  /* 👈 stacks children vertically */
+  gap: 1rem;               /* spacing between fields */
+  width: 100%;
+  max-width: 600px;        /* optional: constrains form width */
+  margin: 2rem auto;       /* centers the form */
+}
+
+.new-project-form label {
+  display: flex;
+  flex-direction: column;  /* label text on top, input below */
+  font-weight: 600;
+}
+
+.new-project-form input,
+.new-project-form textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

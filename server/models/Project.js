@@ -8,7 +8,7 @@ const linkSchema = new Schema({
   url: { type: String, required: true, trim: true },
   type: {
     type: String,
-    enum: ['github', 'itch', 'store', 'video', 'docs', 'other'],
+    enum: ['github', 'itch', 'appstore', 'playstore', 'video', 'docs', 'other'],
     default: 'other'
   }
 }, { _id: false });

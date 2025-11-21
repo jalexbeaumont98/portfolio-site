@@ -12,6 +12,7 @@ import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import AdminRoute from "./routes/AdminRoute";
 import NewProject from "./pages/NewProject";
+import NewQualification from "./pages/NewQualification.jsx";
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
           element={
             <AdminRoute>
               <NewProject />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/qualifications/new"
+          element={
+            <AdminRoute>
+              <NewQualification />
             </AdminRoute>
           }
         />

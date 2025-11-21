@@ -160,7 +160,7 @@ export default function NewProject() {
               type="url"
               value={appstoreUrl}
               onChange={(e) => setAppStoreUrl(e.target.value)}
-              placeholder=""
+              placeholder="https://apps.apple.com/us/app/..."
             />
           </label>
           <label>
@@ -169,7 +169,7 @@ export default function NewProject() {
               type="url"
               value={playstoreUrl}
               onChange={(e) => setPlayStoreUrl(e.target.value)}
-              placeholder=""
+              placeholder="https://play.google.com/store/apps/details?id=..."
             />
           </label>
 

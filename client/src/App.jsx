@@ -28,7 +28,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
-          path="/admin/projects/new"
+          path="/projects/new"
           element={
             <AdminRoute>
               <NewProject />

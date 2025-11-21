@@ -1,25 +1,28 @@
 // src/pages/Contact.jsx
 import { useState } from "react";
-import { createContact } from "../api/contacts.js";
+import { createContact } from "../api/contacts";
 
 export default function Contact() {
+  // Form fields
   const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [lastname, setLastname]   = useState("");
+  const [email, setEmail]         = useState("");
+  const [message, setMessage]     = useState("");
 
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
+  // UI state
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState("");
+  const [status, setStatus]   = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       setError("");
-      setSuccess("");
-      setSaving(true);
+      setStatus("");
+      setLoading(true);
 
+      // Call backend – this assumes createContact(payload) signature
       await createContact({
         firstname,
         lastname,
@@ -27,13 +30,16 @@ export default function Contact() {
         message,
       });
 
-      setSuccess(`Message Sent Successfully.`);
-      // clear form…
+      setStatus("Message sent! Thanks for reaching out.");
+      // Clear form
+      setFirstname("");
+      setLastname("");
+      setEmail("");
+      setMessage("");
     } catch (err) {
       setError(err.message || "Failed to send message");
-      setStatus("");
     } finally {
-      setSaving(false);
+      setLoading(false);
     }
   };
 
@@ -42,7 +48,7 @@ export default function Contact() {
       <h1>Contact Me</h1>
       <p>
         Have a question, want to collaborate, or just say hi?
-        Drop a message below and I'll get back to you!
+        Drop a message below and I&apos;ll get back to you!
       </p>
 
       <form className="contact-form" onSubmit={handleSubmit}>
@@ -51,7 +57,7 @@ export default function Contact() {
           <input
             type="text"
             value={firstname}
-            onChange={e => setFirstname(e.target.value)}
+            onChange={(e) => setFirstname(e.target.value)}
             required
           />
         </label>
@@ -61,7 +67,7 @@ export default function Contact() {
           <input
             type="text"
             value={lastname}
-            onChange={e => setLastname(e.target.value)}
+            onChange={(e) => setLastname(e.target.value)}
             required
           />
         </label>
@@ -71,7 +77,7 @@ export default function Contact() {
           <input
             type="email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </label>
@@ -81,13 +87,13 @@ export default function Contact() {
           <textarea
             rows={5}
             value={message}
-            onChange={e => setMessage(e.target.value)}
+            onChange={(e) => setMessage(e.target.value)}
             required
           />
         </label>
 
         {error && <p className="form-error">{error}</p>}
-        {info && <p className="form-info">{info}</p>}
+        {status && <p className="form-info">{status}</p>}
 
         <button type="submit" disabled={loading}>
           {loading ? "Sending…" : "Send Message"}

@@ -76,7 +76,7 @@ function Navbar() {
                     <button
                         type="button"
                         className="nav-button"
-                        onClick={handleNewProjectClick}
+                        onClick={handleNewQualificationClick}
                     >
                         New Qualification
                     </button>

@@ -8,15 +8,17 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const [info, setInfo] = useState("");
+  const [success, setSuccess] = useState("");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setError("");
-      setStatus("Sending…");
+      setSuccess("");
+      setSaving(true);
 
       await createContact({
         firstname,
@@ -25,11 +27,13 @@ export default function Contact() {
         message,
       });
 
-      setStatus("Message sent!");
+      setSuccess(`Message Sent Successfully.`);
       // clear form…
     } catch (err) {
       setError(err.message || "Failed to send message");
       setStatus("");
+    } finally {
+      setSaving(false);
     }
   };
 

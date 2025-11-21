@@ -71,7 +71,7 @@ function Navbar() {
                         className="nav-button"
                         onClick={handleNewProjectClick}
                     >
-                        New Project
+                        Manage Projects
                     </button>
                 )}
 
@@ -82,7 +82,7 @@ function Navbar() {
                         className="nav-button"
                         onClick={handleNewQualificationClick}
                     >
-                        New Qualification
+                        Manage Qualifications
                     </button>
                 )}
 

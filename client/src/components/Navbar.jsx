@@ -27,6 +27,10 @@ function Navbar() {
         navigate("/projects/new");
     };
 
+    const handleNewQualificationClick = () => {
+        navigate("/qualifications/new");
+    };
+
     return (
         <nav className="navbar">
             <div className="logo">
@@ -64,6 +68,17 @@ function Navbar() {
                         onClick={handleNewProjectClick}
                     >
                         New Project
+                    </button>
+                )}
+
+                {/* Admin-only: New Qual */}
+                {isAdmin && (
+                    <button
+                        type="button"
+                        className="nav-button"
+                        onClick={handleNewProjectClick}
+                    >
+                        New Qualification
                     </button>
                 )}
 

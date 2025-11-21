@@ -4,38 +4,32 @@ import { createContact } from "../api/contacts.js";
 
 export default function Contact() {
   const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname]   = useState("");
-  const [email, setEmail]         = useState("");
-  const [message, setMessage]     = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState("");
-  const [info, setInfo]       = useState("");
+  const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setInfo("");
-
-    // super basic client-side check
-    if (!firstname || !lastname || !email || !message) {
-      setError("Please fill out all fields.");
-      return;
-    }
-
     try {
-      setLoading(true);
-      await createContact({ firstname, lastname, email, message });
+      setError("");
+      setStatus("Sending…");
 
-      setInfo("Thanks for reaching out! I’ll get back to you soon.");
-      setFirstname("");
-      setLastname("");
-      setEmail("");
-      setMessage("");
+      await createContact({
+        firstname,
+        lastname,
+        email,
+        message,
+      });
+
+      setStatus("Message sent!");
+      // clear form…
     } catch (err) {
-      setError(err.message || "Failed to send message.");
-    } finally {
-      setLoading(false);
+      setError(err.message || "Failed to send message");
+      setStatus("");
     }
   };
 

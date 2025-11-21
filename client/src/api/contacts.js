@@ -9,21 +9,10 @@ function authHeaders(token) {
   };
 }
 
-/**
- * Create a new contact.
- *
- * Example payload:
- * {
- *   firstname: "Jacob",
- *   lastname: "Beaumont",
- *   email: "jalexbeaumont@gmail.com",
- *   message: "Loved your number guessing project!"
- * }
- */
-export async function createContact(token, payload) {
+export async function createContact(payload) {
   const res = await fetch(`${API_BASE}/api/contacts`, {
     method: "POST",
-    headers: authHeaders(token),
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
 

@@ -24,11 +24,15 @@ function Navbar() {
     };
 
     const handleNewProjectClick = () => {
-        navigate("/projects/new");
+        navigate("/admin/projects/new");
     };
 
     const handleNewQualificationClick = () => {
-        navigate("/qualifications/new");
+        navigate("/admin/qualifications/new");
+    };
+
+    const handleAdminContactsClick = () => {
+        navigate("/admin/contacts/");
     };
 
     return (
@@ -79,6 +83,17 @@ function Navbar() {
                         onClick={handleNewQualificationClick}
                     >
                         New Qualification
+                    </button>
+                )}
+
+                {/* Admin-only: Access Contacts */}
+                {isAdmin && (
+                    <button
+                        type="button"
+                        className="nav-button"
+                        onClick={handleAdminContactsClick}
+                    >
+                        Check Contacts
                     </button>
                 )}
 

@@ -29,7 +29,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
-          path="/projects/new"
+          path="/admin/projects/new"
           element={
             <AdminRoute>
               <NewProject />
@@ -37,10 +37,18 @@ function App() {
           }
         />
         <Route
-          path="/qualifications/new"
+          path="/admin/qualifications/new"
           element={
             <AdminRoute>
               <NewQualification />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/contacts"
+          element={
+            <AdminRoute>
+              <AdminContacts />
             </AdminRoute>
           }
         />

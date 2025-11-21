@@ -2,6 +2,13 @@
 const API_BASE =
   import.meta.env.VITE_API_BASE || ""; // for localhost use ""
 
+  function authHeaders(token) {
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+}
+
 /**
  * Create a new qualification (ADMIN ONLY).
  *

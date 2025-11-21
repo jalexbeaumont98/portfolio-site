@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext.jsx";
 import { createQualification } from "../api/qualifications.js";
-import "./NewQualification.css"; // optional, or reuse NewProject.css
 
 export default function NewQualification() {
   const { auth } = useAuth();

@@ -1,123 +1,186 @@
-import { useEffect } from "react"
+// src/pages/Projects.jsx
+import { useEffect, useState, useMemo } from "react";
+import { listProjects } from "../api/projects";
 
-function Projects() {
-    useEffect(() => {
-        document.title = "Projects | Jacob Beaumont"
-    }, [])
+const LINK_TYPE_ORDER = {
+  github: 1,
+  appstore: 2,
+  playstore: 3,
+  itch: 4,
+  store: 5,
+  docs: 6,
+  video: 7,
+  other: 99,
+};
 
-    return (
-        <div className="content">
-            <h1>Projects</h1>
-
-            {/* Project 1 */}
-            <section className="project-section">
-                <h2>Asteroid Emperor</h2>
-                <br></br>
-                <img src="/ae_projectphoto2.png" alt="Project One Screenshot" className="project-image" />
-
-                <p>Dodge, shoot, and harness the chaos of bouncing, pinball-like asteroids!<br></br>
-
-                    Rise up and fight through 9 unique worlds to take your rightful place as the strongest in this asteroid filled rogue-like shooter.</p>
-
-                <br></br>
-                <iframe
-                    className="project-video"
-                    src="https://www.youtube.com/embed/RGUJuzWLBgk"
-                    title="Project One Demo"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                ></iframe>
-
-                <p>
-                    Built in Construct3, Asteroid Emperor was a long-term solo project designed to demonstrate my versatility as a developer. The game was fully developed by myself, including design, programming, art, and testing. Throughout the project I gained experience managing a large-scale codebase, developing cross-platform systems, and navigating the process of publishing to mobile platforms. Features include roguelike progression, fast-paced 2D action, and a dedicated UI designed for mobile. The game was released on the Play Store, App Store, and itch.io, and has received positive community feedback, including reviews on AppRaven and SNAPP.
-                    <br></br>
-                    <br></br> Role: Developer and Owner
-                    <br></br> Outcome: Finished and published to stores.
-
-                </p>
-
-                <div>
-                    <h3>Relevant Links</h3>
-                    <ul>
-                        <li><a href="https://play.google.com/store/apps/details?id=com.niftygames.asteroidemperor" target="_blank">Google Play</a></li>
-                        <li><a href="https://apps.apple.com/us/app/asteroid-emperor/id6502265638" target="_blank">App Store</a></li>
-                    </ul>
-                </div>
-
-                <iframe frameborder="0" src="https://itch.io/embed/2597319" width="552" height="167"><a href="https://jalexbeaumont.itch.io/asteroid-emperor">Asteroid Emperor by jalex</a></iframe>
-            </section>
-
-            <hr />
-
-            {/* Project 2 */}
-            <section className="project-section">
-                <h2>Untitled Tower Defense Game</h2>
-                {/*<img src="towerdefence1.png" alt="Project Two Screenshot" className="project-image" />
-                */}
-                <p>A simple tower defense game in Unity C# to show proficiency in the engine/language as well as programming patterns and UI.</p>
-
-                {/* will add this another day
-                <video width="400" controls>
-                    <source src="path-to-project2-video.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-                */}
-                <img src="towerdefence2.png" alt="Project Two Screenshot" className="project-image" />
-                <p>
-                    Built in unity, this project has been a long term attempt to demonstrate my skills as a developer and was solely made by myself. The projects main inspiration was the book Game Programming Patterns by Robert Nystrom and it features many of the patterns described in the book. Some features include: dedicated UI, asset loading, events, turret upgrades, and enemies that can be modified using data files.
-                    <br></br>
-                    <br></br> Role: Developer and Owner
-                    <br></br> Outcome: In progress.
-                </p>
-
-
-                <div>
-                    <h3>Relevant Links</h3>
-                    <ul>
-                        <li><a href="https://github.com/jalexbeaumont98/towerdefencegame" target="_blank">GitHub Repo</a></li>
-                    </ul>
-                </div>
-            </section>
-
-            <hr />
-
-            {/* Project 3 */}
-            <section className="project-section">
-                <h2>Custom Archaeology Drawing Tool</h2>
-                <img src="archeosoft.png" alt="Drawing Tool Screenshot" className="project-image" />
-
-                <p>A Unity-based drawing tool built for archaeologists to create precise dig site diagrams.</p>
-
-                {/* todo */}
-                {/* 
-  <video width="400" controls>
-    <source src="path-to-project3-video.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-  */}
-                <br></br>
-                <p>
-                    Developed a specialized tool within Unity that streamlined diagram creation for archaeologists.
-                    Features included image integration, customizable templates, color selection, and cropping capabilities.
-                    The tool was also integrated with the application's data entry system, making it easy to insert
-                    finished diagrams directly into archaeological records. Was solely developed by myself based on direction from my supervisors and was part of a larger software.
-                    <br></br>
-                    <br></br> Role: Developer
-                    <br></br> Outcome: Finished during time at company.
-
-                </p>
-
-                <div>
-                    <h3>Relevant Links</h3>
-                    <ul>
-                        <li><a href="https://www.archaeosoft.com/" target="_blank">Software's Website</a></li>
-                    </ul>
-                </div>
-
-
-            </section>
-        </div>
-    )
+function sortLinks(links = []) {
+  return [...links].sort((a, b) => {
+    const aOrder = LINK_TYPE_ORDER[a.type] ?? LINK_TYPE_ORDER.other;
+    const bOrder = LINK_TYPE_ORDER[b.type] ?? LINK_TYPE_ORDER.other;
+    if (aOrder !== bOrder) return aOrder - bOrder;
+    // tie-breaker: label alphabetically
+    return (a.label || "").localeCompare(b.label || "");
+  });
 }
 
-export default Projects;
+function formatDateRange(startDate, endDate) {
+  if (!startDate && !endDate) return null;
+  const start = startDate ? new Date(startDate).toLocaleDateString() : "";
+  const end = endDate ? new Date(endDate).toLocaleDateString() : "";
+  if (start && end) return `${start} – ${end}`;
+  return start || end;
+}
+
+export default function Projects() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [error, setError]       = useState("");
+
+  useEffect(() => {
+    document.title = "Projects | Jacob Beaumont";
+
+    let cancelled = false;
+
+    async function load() {
+      try {
+        setLoading(true);
+        setError("");
+        const data = await listProjects();
+        if (!cancelled) {
+          setProjects(Array.isArray(data) ? data : []);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err.message || "Failed to load projects");
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    load();
+    return () => { cancelled = true; };
+  }, []);
+
+  const sortedProjects = useMemo(() => {
+    // Optional: featured first, then newest
+    return [...projects].sort((a, b) => {
+      if (a.featured && !b.featured) return -1;
+      if (b.featured && !a.featured) return 1;
+      const aDate = a.created ? new Date(a.created).getTime() : 0;
+      const bDate = b.created ? new Date(b.created).getTime() : 0;
+      return bDate - aDate;
+    });
+  }, [projects]);
+
+  return (
+    <div className="content">
+      <h1>Projects</h1>
+
+      {loading && <p>Loading projects…</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {!loading && !error && sortedProjects.length === 0 && (
+        <p>No projects found. (Log in as admin to add some!)</p>
+      )}
+
+      {sortedProjects.map((p) => {
+        const links = sortLinks(p.links || []);
+        const dateRange = formatDateRange(p.startDate, p.endDate);
+
+        return (
+          <section key={p._id} className="project-section">
+            {/* Title */}
+            <h2>{p.title}</h2>
+
+            {/* Tagline */}
+            {p.tagline && (
+              <p className="project-tagline">
+                {p.tagline}
+              </p>
+            )}
+
+            {/* Images (in order) */}
+            {Array.isArray(p.imageUrls) && p.imageUrls.length > 0 && (
+              <div className="project-images">
+                {p.imageUrls.map((url, idx) => (
+                  <img
+                    key={idx}
+                    src={url}
+                    alt={`${p.title} screenshot ${idx + 1}`}
+                    className="project-image"
+                  />
+                ))}
+              </div>
+            )}
+
+            {/* Meta info (optional) */}
+            {(p.role || p.techStack?.length || dateRange) && (
+              <p className="project-meta">
+                {p.role && <>Role: {p.role}<br /></>}
+                {dateRange && <>Timeline: {dateRange}<br /></>}
+                {p.techStack && p.techStack.length > 0 && (
+                  <>Tech: {p.techStack.join(", ")}<br /></>
+                )}
+                {typeof p.completed === "boolean" && (
+                  <>
+                    Status:{" "}
+                    {p.completed
+                      ? p.completionDate
+                        ? `Completed (${new Date(p.completionDate).toLocaleDateString()})`
+                        : "Completed"
+                      : "In Progress"}
+                  </>
+                )}
+              </p>
+            )}
+
+            {/* Description */}
+            {p.description && (
+              <p className="project-description">
+                {p.description}
+              </p>
+            )}
+
+            {/* Embedded video (YouTube, etc.) */}
+            {p.videoUrl && (
+              <iframe
+                className="project-video"
+                src={p.videoUrl}
+                title={`${p.title} video`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            )}
+
+            {/* Itch.io embed (raw iframe string, optional) */}
+            {p.itchEmbedHtml && (
+              <div
+                className="project-itch-embed"
+                // ⚠️ We assume only you (admin) can set this field.
+                dangerouslySetInnerHTML={{ __html: p.itchEmbedHtml }}
+              />
+            )}
+
+            {/* Links, in priority order */}
+            {links.length > 0 && (
+              <div className="project-links">
+                <h3>Relevant Links</h3>
+                <ul>
+                  {links.map((lnk, i) => (
+                    <li key={i}>
+                      <a href={lnk.url} target="_blank" rel="noreferrer">
+                        {lnk.label || lnk.type || "Link"}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <hr />
+          </section>
+        );
+      })}
+    </div>
+  );
+}

@@ -1,37 +1,99 @@
-import { useEffect } from "react"
+// src/pages/Education.jsx
+import { useEffect, useState } from "react";
+import { listQualifications } from "../api/qualifications.js";
+
+function formatMonthYear(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("en-CA", {
+    month: "long",
+    year: "numeric",
+  });
+}
 
 function Education() {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
   useEffect(() => {
-    document.title = "Education | Jacob Beaumont"
-  }, [])
+    document.title = "Education | Jacob Beaumont";
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        setLoading(true);
+        setError("");
+        const data = await listQualifications();
+        if (!cancelled) {
+          setItems(Array.isArray(data) ? data : []);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err.message || "Failed to load education");
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const now = new Date();
 
   return (
     <div>
       <h1>Education</h1>
 
-      <section className="education-section">
-        <h2>Centennial College, Scarborough</h2>
-        <h3>Game Programming Fast Track</h3>
-        <p>September 2025 – May 2027 (Expected)</p>
-        <p>
-          Enrolled in an intensive program focused on advanced game programming concepts, 
-          with hands-on co-op experience to strengthen industry knowledge and skills.
-        </p>
-      </section>
+      {loading && <p>Loading education…</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <hr />
+      {!loading && !error && items.length === 0 && (
+        <p>No education entries yet.</p>
+      )}
 
-      <section className="education-section">
-        <h2>University of New Brunswick, Fredericton</h2>
-        <h3>Bachelor of Computer Science with Co-op Designation</h3>
-        <p>September 2017 – October 2023</p>
-        <p>
-          Completed a comprehensive computer science degree with a focus on software development 
-          and co-op placements that provided real-world industry experience.
-        </p>
-      </section>
+      {items.map((q) => {
+        const startLabel = formatMonthYear(q.startDate);
+        const endLabel = formatMonthYear(q.endDate);
+
+        let dateLine = `${startLabel} – ${endLabel}`;
+        const endDateObj = q.endDate ? new Date(q.endDate) : null;
+
+        if (endDateObj && endDateObj > now) {
+          dateLine += " (Expected)";
+        }
+
+        return (
+          <section key={q._id} className="education-section">
+            {/* institution + location */}
+            <h2>
+              {q.institution}
+              {q.location ? `, ${q.location}` : ""}
+            </h2>
+
+            {/* title */}
+            <h3>{q.title}</h3>
+
+            {/* start date + end date (+ Expected if in future) */}
+            <p>{dateLine}</p>
+
+            {/* description */}
+            <p>{q.description}</p>
+
+            <hr />
+          </section>
+        );
+      })}
     </div>
-  )
+  );
 }
 
 export default Education;

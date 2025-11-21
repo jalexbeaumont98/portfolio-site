@@ -1,7 +1,7 @@
 // src/pages/AdminContacts.jsx
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext.jsx";
-import { listContacts } from "../api/contacts.js";
+import { listContacts, deleteContact } from "../api/contacts.js";
 import "./AdminContacts.css";
 
 export default function AdminContacts() {
@@ -38,6 +38,22 @@ export default function AdminContacts() {
     return () => { cancelled = true; };
   }, [token]);
 
+  const handleDelete = async (id) => {
+    if (!token) return;
+
+    const ok = window.confirm("Are you sure you want to delete this message?");
+    if (!ok) return;
+
+    try {
+      setError("");
+      await deleteContact(token, id);
+      // Optimistically remove from local state
+      setContacts(prev => prev.filter(c => c._id !== id));
+    } catch (err) {
+      setError(err.message || "Failed to delete contact");
+    }
+  };
+
   return (
     <div className="page-container admin-contacts-page">
       <h1>Contact Messages</h1>
@@ -73,6 +89,14 @@ export default function AdminContacts() {
                   ? new Date(c.createdAt).toLocaleString()
                   : "Unknown"}
               </span>
+
+              <button
+                type="button"
+                className="contact-delete-button"
+                onClick={() => handleDelete(c._id)}
+              >
+                Delete
+              </button>
             </footer>
           </article>
         ))}

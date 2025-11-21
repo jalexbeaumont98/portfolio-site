@@ -37,3 +37,17 @@ export async function listContacts(token) {
 
   return res.json();
 }
+
+export async function deleteContact(token, id) {
+  const res = await fetch(`${API_BASE}/api/admin/contacts/${id}`, {
+    method: "DELETE",
+    headers: authHeaders(token),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || err.message || "Failed to delete contact");
+  }
+
+  return res.json();
+}

@@ -39,7 +39,7 @@ export async function listContacts(token) {
 }
 
 export async function deleteContact(token, id) {
-  const res = await fetch(`${API_BASE}/api/admin/contacts/${id}`, {
+  const res = await fetch(`${API_BASE}/api/contacts/${id}`, {
     method: "DELETE",
     headers: authHeaders(token),
   });

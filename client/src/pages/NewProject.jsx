@@ -292,7 +292,7 @@ export default function NewProject() {
         </label>
       </div>
 
-      <form className="admin-form" onSubmit={handleSubmit}>
+      <form className="new-project-form" onSubmit={handleSubmit}>
         <label>
           Title
           <input

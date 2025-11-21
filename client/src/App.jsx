@@ -13,6 +13,7 @@ import Signup from './pages/Signup.jsx';
 import AdminRoute from "./routes/AdminRoute";
 import NewProject from "./pages/NewProject";
 import NewQualification from "./pages/NewQualification.jsx";
+import AdminContacts from "./pages/AdminContacts.jsx";
 
 function App() {
   return (

@@ -20,7 +20,7 @@ function authHeaders(token) {
  *   message: "Loved your number guessing project!"
  * }
  */
-export async function createContact(payload) {
+export async function createContact(token, payload) {
   const res = await fetch(`${API_BASE}/api/contacts`, {
     method: "POST",
     headers: authHeaders(token),

@@ -41,6 +41,7 @@ export default function Signup() {
             Name
             <input
               className="auth-input"
+              data-cy="signup-name"
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
@@ -52,6 +53,7 @@ export default function Signup() {
             Email
             <input
               className="auth-input"
+              data-cy="signup-email"
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
@@ -63,6 +65,7 @@ export default function Signup() {
             Password
             <input
               className="auth-input"
+              data-cy="signup-password"
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}

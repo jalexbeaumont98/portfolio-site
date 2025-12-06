@@ -40,6 +40,7 @@ export default function Login() {
             Email
             <input
               className="auth-input"
+              data-cy="login-email"
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
@@ -51,6 +52,7 @@ export default function Login() {
             Password
             <input
               className="auth-input"
+              data-cy="login-password"
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}

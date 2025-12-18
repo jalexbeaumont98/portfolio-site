@@ -17,7 +17,7 @@ function toInputDate(value) {
 
 // Helper: get first link URL of a given type from links[]
 function getLink(project, type) {
-  const link = (project.links || []).find((l) => l.type === type);
+  const link = (project?.links || []).find((l) => l?.type === type);
   return link?.url || "";
 }
 
@@ -37,6 +37,9 @@ export default function NewProject() {
   const [description, setDescription] = useState("");
   const [completed, setCompleted] = useState(false);
   const [completionDate, setCompletionDate] = useState("");
+  const [iconUrl, setIconUrl] = useState("");
+  const [priority, setPriority] = useState(0);
+  const [playableUrl, setPlayableUrl] = useState("");
 
   const [githubUrl, setGithubUrl] = useState("");
   const [itchUrl, setItchUrl] = useState("");
@@ -106,6 +109,9 @@ export default function NewProject() {
       setTechStackCsv("");
       setRole("");
       setFeatured(false);
+      setIconUrl("");
+      setPriority(0);
+      setPlayableUrl("");
       return;
     }
 
@@ -115,6 +121,10 @@ export default function NewProject() {
     setDescription(currentProject.description || "");
     setCompleted(!!currentProject.completed);
     setCompletionDate(toInputDate(currentProject.completionDate));
+
+    setIconUrl(currentProject.iconUrl || "");
+    setPriority(Number.isFinite(currentProject.priority) ? currentProject.priority : 0);
+    setPlayableUrl(getLink(currentProject, "playable"));
 
     setGithubUrl(getLink(currentProject, "github"));
     setItchUrl(getLink(currentProject, "itch"));
@@ -148,6 +158,14 @@ export default function NewProject() {
       });
     }
 
+    if (playableUrl.trim()) {
+      links.push({
+        label: "Try this project!",
+        url: playableUrl.trim(),
+        type: "playable",
+      });
+    }
+
     if (playstoreUrl.trim()) {
       links.push({
         label: "Play Store",
@@ -174,6 +192,8 @@ export default function NewProject() {
       description,
       completed,
       completionDate: completed && completionDate ? completionDate : null,
+      iconUrl: iconUrl.trim() || undefined,
+      priority: Number(priority) || 0,
       links,
       videoUrl: videoUrl || undefined,
       imageUrls,
@@ -226,6 +246,9 @@ export default function NewProject() {
         setTechStackCsv("");
         setRole("");
         setFeatured(false);
+        setIconUrl("");
+        setPriority(0);
+        setPlayableUrl("");
       }
     } catch (err) {
       setError(err.message || "Failed to save project");
@@ -343,6 +366,17 @@ export default function NewProject() {
         )}
 
         <h3>Links</h3>
+
+        <label>
+          Playable Build URL (Try this project!)
+          <input
+            type="url"
+            value={playableUrl}
+            onChange={(e) => setPlayableUrl(e.target.value)}
+            placeholder="https://play.asteroidemperor.ca/..."
+          />
+        </label>
+
         <label>
           GitHub URL
           <input
@@ -403,6 +437,16 @@ export default function NewProject() {
         </label>
 
         <label>
+          Icon URL (used for the circular banner icon)
+          <input
+            type="text"
+            value={iconUrl}
+            onChange={(e) => setIconUrl(e.target.value)}
+            placeholder="/icons/my-icon.png or https://..."
+          />
+        </label>
+
+        <label>
           Tech Stack (comma separated)
           <input
             type="text"
@@ -429,6 +473,16 @@ export default function NewProject() {
             onChange={(e) => setFeatured(e.target.checked)}
           />
           Featured?
+        </label>
+
+        <label>
+          Priority (higher shows higher)
+          <input
+            type="number"
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+            placeholder="0"
+          />
         </label>
 
         {error && <p className="form-error">{error}</p>}

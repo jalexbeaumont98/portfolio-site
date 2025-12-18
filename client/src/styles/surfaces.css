@@ -1,0 +1,79 @@
+/* src/styles/surfaces.css */
+
+/* Shared theme tokens */
+:root {
+  --surface-bg: #f4f5f7;
+  --surface-1: #ffffff;
+  --surface-2: #fafafa;
+  --surface-border: rgba(0, 0, 0, 0.10);
+  --surface-shadow-soft: 0 4px 14px rgba(0, 0, 0, 0.08);
+
+  --surface-text: #111827;
+  --surface-muted: rgba(17, 24, 39, 0.72);
+  --surface-muted-2: rgba(17, 24, 39, 0.55);
+
+  --surface-radius: 16px;
+  --surface-radius-sm: 12px;
+
+  --page-maxw: 1100px;
+  --page-pad: 20px;
+}
+
+/* Standard page container */
+.page {
+  max-width: var(--page-maxw);
+  margin: 0 auto;
+  padding: 28px 16px 56px;
+  color: var(--surface-text);
+}
+
+/* Standard title style (match Projects) */
+.page h1 {
+  font-size: 2rem;
+  line-height: 1.15;
+  margin: 0 0 18px;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.page p {
+  margin: 10px 0;
+  color: var(--surface-muted);
+}
+
+/* Reusable bezeled “card” */
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--surface-radius);
+  box-shadow: var(--surface-shadow-soft);
+  padding: 28px 36px; /* ⬅ more horizontal breathing room */
+}
+
+/* Vertical list of cards */
+.card-list {
+  display: grid;
+  gap: 14px;
+}
+
+.card p {
+  max-width: 75ch;      /* readable line length */
+  margin: 10px auto;    /* centers the paragraph block */
+  text-align: center;   /* centers the text */
+}
+
+.card h3 {
+  margin: 0 0 14px;
+  font-size: 1.1rem;
+  font-weight: 650;
+  color: var(--surface-muted);   /* muted grey like other subtitles */
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.card--compact {
+  max-width: 520px;   /* makes it smaller */
+  width: 100%;
+  margin: 0 auto;     /* centers it in the page */
+}
+

@@ -11,15 +11,17 @@ function About() {
       
       <p>Hi! I’m Jacob Beaumont but you’re free to call me Jake.</p>
       <br></br>
-      <img src="/profileshot.jpg" alt="Profile shot" className="project-image" />
+      <img src="/profileshot.jpg" alt="Profile shot" className="aboutme-image" />
       <br></br>
-      <p>Originally from Fredericton, New Brunswick, I’ve made my way to Halifax after graduating from UNB in the hopes of finding more opportunities in a bigger and busier city.</p>
-      <br></br>
-      <p>I have a bachelor's degree in Computer Science and I've recently started the Game Programming Fast Track Program at Centennial College.</p>
-      <br></br>
-      <p>I enjoy game development (naturally), going out with my friends, live music, and playing rec as well as league sports, especially soccer which I play on multiple teams for. </p>
-      <br></br>
-      <p>I have two cats and live with one roommate on the north end of Halifax.</p>
+      <p className="aboutme-description">
+  Originally from Fredericton, New Brunswick, I’ve made my way to Halifax after graduating from UNB in the hopes of finding more opportunities in a bigger and busier city.
+  <br /><br />
+  I have a bachelor's degree in Computer Science and I've recently started the Game Programming Fast Track Program at Centennial College.
+  <br /><br />
+  I enjoy game development, going out with my friends, live music, and playing recreational as well as league sports—especially soccer, which I play on multiple teams.
+  <br /><br />
+  I have two cats and live with one roommate on the north end of Halifax.
+</p>
 
       <br></br>
       <p>

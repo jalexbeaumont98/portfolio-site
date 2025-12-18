@@ -1,0 +1,35 @@
+.education-card {
+  text-align: center;
+}
+
+.education-card h2 {
+  margin: 0 0 6px;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  color: var(--surface-text);
+}
+
+.education-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  color: var(--surface-muted);
+  font-weight: 600;
+}
+
+
+.education-card .education-dates {
+    text-align: center;
+  margin: 0 0 16px;
+  font-size: 0.95rem;
+  color: var(--surface-muted-2);
+  max-width: 100%;
+}
+
+/* Description block */
+.education-card .education-description {
+  max-width: 65ch;          /* 👈 readability */
+  margin: 0 auto;           /* center the block */
+  text-align: center;         /* left-align text itself */
+  line-height: 1.6;
+}
+

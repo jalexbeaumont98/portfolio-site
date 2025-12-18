@@ -1,0 +1,385 @@
+/* src/pages/projects.css */
+
+/* -----------------------------
+   Theme tokens (safe defaults)
+------------------------------ */
+:root {
+    --projects-bg: #f4f5f7;
+    --projects-surface: #ffffff;
+    --projects-surface-2: #fafafa;
+    --projects-border: rgba(0, 0, 0, 0.10);
+    --projects-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --projects-shadow-soft: 0 4px 14px rgba(0, 0, 0, 0.08);
+
+    --projects-text: #111827;
+    --projects-muted: rgba(17, 24, 39, 0.72);
+    --projects-muted-2: rgba(17, 24, 39, 0.55);
+
+    --projects-accent: #2563eb;
+    /* optional */
+    --projects-radius: 16px;
+    --projects-radius-sm: 12px;
+
+    --projects-maxw: 1100px;
+    --projects-gap: 16px;
+    --projects-pad: 20px;
+}
+
+/* -----------------------------
+   Page container / header
+------------------------------ */
+.content {
+    max-width: var(--projects-maxw);
+    margin: 0 auto;
+    padding: 28px 16px 56px;
+    color: var(--projects-text);
+}
+
+.content h1 {
+    font-size: 2rem;
+    line-height: 1.15;
+    margin: 0 0 18px;
+    letter-spacing: -0.02em;
+    text-align: center;
+}
+
+
+
+/* Loading/error text */
+.content p {
+    margin: 10px 0;
+    color: var(--projects-muted);
+}
+
+/* -----------------------------
+   Current layout: project section
+   (what you have today)
+------------------------------ */
+.project-section {
+    background: var(--projects-surface);
+    border: 1px solid var(--projects-border);
+    border-radius: var(--projects-radius);
+    box-shadow: var(--projects-shadow-soft);
+    padding: var(--projects-pad);
+    margin: 0 0 18px;
+}
+
+.project-section h2 {
+    margin: 0 0 10px;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+}
+
+.project-tagline {
+    margin: 0 0 14px;
+    font-size: 1.05rem;
+    color: var(--projects-muted);
+}
+
+.project-images {
+
+    justify-items: center;
+    align-self: stretch;
+    /* center images inside the grid */
+}
+
+.project-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--projects-radius-sm);
+    border: 1px solid var(--projects-border);
+    background: var(--projects-surface-2);
+}
+
+.project-meta {
+    margin: 10px 0 14px;
+    color: var(--projects-muted-2);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.project-description {
+    margin: 10px 0 16px;
+    color: var(--projects-text);
+    line-height: 1.6;
+    text-align: left;
+}
+
+/* Video embed */
+.project-video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--projects-border);
+    border-radius: var(--projects-radius-sm);
+    background: #000;
+    margin: 12px 0 18px;
+}
+
+/* Itch embed container */
+.project-itch-embed {
+    margin: 12px 0 18px;
+    border-radius: var(--projects-radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--projects-border);
+    background: var(--projects-surface-2);
+}
+
+/* Links block */
+.project-links {
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: var(--projects-radius-sm);
+    background: var(--projects-surface-2);
+    border: 1px solid var(--projects-border);
+}
+
+.project-links h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+    color: var(--projects-text);
+}
+
+.project-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    /* key */
+    gap: 10px 12px;
+    /* row gap | column gap */
+    justify-content: center;
+    /* center the row */
+}
+
+.project-links li a {
+    width: fit-content;
+    white-space: nowrap;
+}
+
+.project-links li a:hover {
+    border-color: rgba(37, 99, 235, 0.35);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.10);
+    transform: translateY(-1px);
+}
+
+.project-links li a:focus-visible {
+    outline: 2px solid rgba(37, 99, 235, 0.55);
+    outline-offset: 2px;
+}
+
+.project-chip.project-chip--playable {
+    text-decoration: none;
+    font-weight: 650;
+    font-size: 0.82rem;
+    /* normal chips are ~0.78rem */
+    padding: 7px 12px;
+    /* slightly taller + wider */
+    /* subtle highlight */
+    border-color: rgba(37, 99, 235, 0.40);
+    background: rgba(37, 99, 235, 0.10);
+    color: var(--projects-text);
+
+    transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.project-chip--playable:hover {
+    transform: translateY(-1px);
+    border-color: rgba(37, 99, 235, 0.60);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.12);
+}
+
+/* Divider */
+.project-section hr {
+    border: 0;
+    height: 1px;
+    margin: 18px 0 0;
+    background: rgba(0, 0, 0, 0.10);
+}
+
+/* -----------------------------
+   Future layout: collapsible modules / accordion
+   (we’ll use these when rebuilding Projects.jsx)
+------------------------------ */
+
+/* Wrap the whole list */
+.projects-list {
+    display: grid;
+    gap: 14px;
+}
+
+/* Each module container */
+.project-module {
+    background: var(--projects-surface);
+    border: 1px solid var(--projects-border);
+    border-radius: var(--projects-radius);
+    box-shadow: var(--projects-shadow-soft);
+    overflow: hidden;
+}
+
+/* Collapsed row header (clickable area) */
+.project-header {
+    min-height: 72px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    cursor: pointer;
+    user-select: none;
+    background: var(--projects-surface);
+}
+
+.project-header:hover {
+    background: #fbfbfc;
+}
+
+/* Icon image (small) */
+.project-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 999px;
+    /* circle */
+    border: 1px solid var(--projects-border);
+    background: var(--projects-surface-2);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* Title + optional tagline */
+.project-header-main {
+    min-width: 0;
+    display: grid;
+    gap: 2px;
+}
+
+.project-title {
+    min-width: 0;
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: var(--projects-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.project-subtitle {
+    display: block;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--projects-muted);
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+}
+
+/* Right-side meta + toggle */
+.project-header-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Small “chips” for quick info (tech/status/platform etc.) */
+.project-chips {
+    display: none;
+    /* enable later if you want */
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.project-chip {
+    font-size: 0.78rem;
+    color: var(--projects-muted);
+    border: 1px solid var(--projects-border);
+    background: var(--projects-surface-2);
+    padding: 6px 8px;
+    border-radius: 999px;
+    line-height: 1;
+}
+
+/* Chevron / toggle icon */
+.project-toggle {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid var(--projects-border);
+    background: var(--projects-surface-2);
+    display: grid;
+    place-items: center;
+    transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+/* Example: rotate when open (we'll add class in JSX later) */
+.project-module.is-open .project-toggle {
+    transform: rotate(180deg);
+    border-color: rgba(37, 99, 235, 0.35);
+}
+
+/* Expanded content panel */
+.project-body {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 16px;
+    background: #fcfcfd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* centers child blocks horizontally */
+}
+
+/* When we migrate, the inside of project-body can reuse existing section styles */
+.project-body .project-tagline,
+.project-body .project-meta,
+.project-body .project-description {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Optional: subtle “featured” highlight */
+.project-module.is-featured {
+    border-color: rgba(37, 99, 235, 0.30);
+    box-shadow: 0 10px 28px rgba(37, 99, 235, 0.10);
+}
+
+/* -----------------------------
+   Responsive tweaks
+------------------------------ */
+@media (min-width: 760px) {
+    .project-images {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Enable chips on larger screens if you want */
+    .project-chips {
+        display: inline-flex;
+    }
+
+    .project-header {
+        padding: 14px 18px;
+    }
+
+    .project-body {
+        padding: 18px;
+    }
+
+
+}
+
+
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+
+    .project-links li a,
+    .project-toggle {
+        transition: none;
+    }
+}

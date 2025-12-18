@@ -1,6 +1,7 @@
 // src/pages/Education.jsx
 import { useEffect, useState } from "react";
 import { listQualifications } from "../api/qualifications.js";
+import "./education.css";
 
 function formatMonthYear(dateStr) {
   if (!dateStr) return "";
@@ -50,7 +51,7 @@ function Education() {
   const now = new Date();
 
   return (
-    <div>
+    <div className="page">
       <h1>Education</h1>
 
       {loading && <p>Loading education…</p>}
@@ -60,6 +61,7 @@ function Education() {
         <p>No education entries yet.</p>
       )}
 
+      <div className="card-list">
       {items.map((q) => {
         const startLabel = formatMonthYear(q.startDate);
         const endLabel = formatMonthYear(q.endDate);
@@ -72,7 +74,7 @@ function Education() {
         }
 
         return (
-          <section key={q._id} className="education-section">
+          <section key={q._id} className="card education-card">
             {/* institution + location */}
             <h2>
               {q.institution}
@@ -83,15 +85,16 @@ function Education() {
             <h3>{q.title}</h3>
 
             {/* start date + end date (+ Expected if in future) */}
-            <p>{dateLine}</p>
+            <p className="education-dates">{dateLine}</p>
 
             {/* description */}
-            <p>{q.description}</p>
+            <p className="education-description">{q.description}</p>
 
-            <hr />
+            
           </section>
         );
       })}
+      </div>
     </div>
   );
 }

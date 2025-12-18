@@ -1,0 +1,36 @@
+.loading-image-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.loading-image-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Spinner overlay */
+.image-spinner {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Spinner animation */
+.image-spinner::after {
+  content: "";
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 0, 0, 0.15);
+  border-top-color: rgba(37, 99, 235, 0.9);
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

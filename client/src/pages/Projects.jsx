@@ -1,7 +1,7 @@
 // src/pages/Projects.jsx
 import { useEffect, useMemo, useState } from "react";
 import { listProjects } from "../api/projects";
-import "./projects.css";
+import "./Projects.css";
 import LoadingImage from "../components/LoadingImage";
 
 const LINK_TYPE_ORDER = {

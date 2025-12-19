@@ -3,9 +3,9 @@ import { getAll, getById, createOne, updateById, removeById, removeAll } from '.
 import { requireSignin } from '../controllers/authController.js';
 
 const router = Router();
-router.get('/', getAll);
-router.get('/:id', getById);
-router.post('/', requireSignin, createOne);
+router.get('/', requireSignin, getAll);
+router.get('/:id', requireSignin, getById);
+router.post('/', createOne);
 router.put('/:id', requireSignin, updateById);
 router.delete('/:id', requireSignin, removeById);
 router.delete('/', requireSignin, removeAll);

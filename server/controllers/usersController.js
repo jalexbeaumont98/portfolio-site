@@ -1,12 +1,43 @@
 import User from '../models/User.js';
 
+
+
 // Sign-up (creates a user; password hashed by pre-save)
 export const create = async (req, res, next) => {
   try {
-    const u = await User.create(req.body); // expects {name,email,password,...}
-    res.status(201).json({ _id: u._id, name: u.name, email: u.email });
+
+
+    const { name, email, password} = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: 'name, email, and password are required' });
+    }
+
+    // ✅ Explicit duplicate email check (independent of DB index)
+    const existing = await User.findOne({ email });
+    if (existing) {
+      return res.status(400).json({ error: 'Email already exists' });
+    }
+
+    const u = await User.create({
+      name,
+      email,
+      password,
+    });
+
+    return res
+      .status(201)
+      .json({ _id: u._id, name: u.name, email: u.email, role: u.role });
+
   } catch (err) {
-    next(err);
+    if (err.code === 11000 && err.keyPattern?.email) {
+      return res
+        .status(400)
+        .json({ error: 'Email already exists' });
+    }
+
+    // Fall back to global error handler for everything else
+    return next(err);
   }
 };
 

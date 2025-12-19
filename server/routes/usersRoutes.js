@@ -6,8 +6,6 @@ import {
   updateById,
   removeById,
   removeAll,
-  // auth-aware helpers:
-  create as registerUser,   // optional “signup” endpoint
   userByID,
   read
 } from '../controllers/usersController.js';
@@ -31,7 +29,7 @@ router.delete('/', removeAll);
  * - POST /api/users/signup  → hashed-password creation (registerUser)
  * - GET  /api/users/profile/:userId → protected read of own profile
  */
-router.post('/signup', registerUser);
+//router.post('/signup', registerUser);
 router.get('/profile/:userId', requireSignin, hasAuthorization, read);
 
 /** Bind :userId for the profile route */

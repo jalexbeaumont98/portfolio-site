@@ -8,7 +8,7 @@ const linkSchema = new Schema({
   url: { type: String, required: true, trim: true },
   type: {
     type: String,
-    enum: ['github', 'itch', 'appstore', 'playstore', 'video', 'docs', 'other'],
+    enum: ['github', 'itch', 'appstore', 'playstore', 'video', 'docs', 'playable', 'other'],
     default: 'other'
   }
 }, { _id: false });
@@ -21,18 +21,24 @@ const projectSchema = new Schema({
   completionDate: { type: Date },
   description: { type: String, trim: true },
 
+  // manual ordering priority (higher = higher in list)
+  // Featured still overrides, but this sorts within featured and within non-featured
+  priority: { type: Number, default: 0, min: 0 },
+
   // Generic list of links (GitHub, itch, store page, design doc, etc.)
   links: [linkSchema],
 
   // Special “hero” video link for embedding on the project page
   videoUrl: { type: String, trim: true },
 
+  // Store a URL or a /public path (e.g. "/icons/asteroid-emperor.png")
+  iconUrl: { type: String, trim: true },
+
   // Easiest way to do images: store URLs, not binary blobs
   // (e.g. images hosted on Vercel /public, Cloudinary, itch, etc.)
   imageUrls: [{ type: String, trim: true }],
   itchWidgetEmbed:{ type: String, trim: true }, 
 
-  // Optional extra polish fields
   techStack: [{ type: String, trim: true }],   // ["Unity", "C#", "Firebase"]
   role: { type: String, trim: true },     // "Solo dev", "Programmer", etc.
   featured: { type: Boolean, default: false },
